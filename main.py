@@ -1,5 +1,6 @@
 # pylint: disable=missing-docstring
 # pylint: disable=unused-argument
+# pylint: disable=trailing-whitespace
 import os
 import math
 
