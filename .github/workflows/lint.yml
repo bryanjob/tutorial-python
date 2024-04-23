@@ -1,6 +1,7 @@
 name: Code Analysis
 
-on: [workflow_call, push, pull_request]
+on: 
+  push:
     paths:
       - '**.py'
 
