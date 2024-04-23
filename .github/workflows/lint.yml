@@ -1,6 +1,6 @@
 name: Code Analysis
 
-on: [workflow_call, push, pull_request, workflow_dispatch]
+on: [workflow_call, push, pull_request]
     paths:
       - '**.py'
 
