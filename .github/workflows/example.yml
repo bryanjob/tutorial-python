@@ -29,3 +29,4 @@ jobs:
           echo ${{ github.sha }}
           echo ${{ env.SERVICE_ACCOUNT }}
           echo ${{ env.AR_URL }}
+          echo ${{ secrets.SERVICE_ACCOUNT_NAME }}
