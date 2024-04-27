@@ -10,7 +10,7 @@ env:
   AR_URL: ${AR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}
   SERVICE_ACCOUNT_NAME: ${{ secrets.SERVICE_ACCOUNT_NAME }}
   SERVICE_ACCOUNT: ${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
-  TEST_VARIABLE: ${{ var.A_VARIABLE }}
+  TEST_VARIABLE: ${{ vars.A_VARIABLE }}
 
 jobs:
   example:
