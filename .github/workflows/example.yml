@@ -8,7 +8,7 @@ env:
   IMAGE: image-name
   AR_LOCATION: us-central1
   AR_URL: ${AR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}
-  SERVICE_ACCOUNT_NAME: service-account-1
+  SERVICE_ACCOUNT_NAME: ${{ secrets.SERVICE_ACCOUNT_NAME }}
   SERVICE_ACCOUNT: ${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
 
 jobs:
