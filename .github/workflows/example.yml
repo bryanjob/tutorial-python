@@ -16,3 +16,4 @@ jobs:
         run: |
           echo ${{ steps.vars.outputs.short_ref }}
           echo ${{ github.ref_name }}
+          echo ${GITHUB_SHA}
