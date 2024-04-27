@@ -2,6 +2,15 @@ name: Online Example
 
 on: workflow_dispatch
 
+env:
+  PROJECT_ID: project-python
+  REPOSITORY: repo-name
+  IMAGE: image-name
+  AR_LOCATION: us-central1
+  AR_URL: ${AR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}
+  SERVICE_ACCOUNT_NAME: service-account-1
+  SERVICE_ACCOUNT: ${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
+
 jobs:
   example:
     runs-on: ubuntu-latest
@@ -17,3 +26,6 @@ jobs:
           echo ${{ steps.vars.outputs.short_ref }}
           echo ${{ github.ref_name }}
           echo ${GITHUB_SHA}
+          echo ${{ github.sha }}
+          echo ${{ env.SERVICE_ACCOUNT }}
+          echo ${{ env.AR_URL }}
