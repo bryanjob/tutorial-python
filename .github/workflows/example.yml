@@ -11,6 +11,7 @@ env:
   SERVICE_ACCOUNT_NAME: ${{ secrets.SERVICE_ACCOUNT_NAME }}
   SERVICE_ACCOUNT: ${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
   TEST_VARIABLE: ${{ vars.A_VARIABLE }}
+  TEST_VARIABLE_2: ${{ vars.B_VARIABLE }}
 
 jobs:
   example:
@@ -33,3 +34,4 @@ jobs:
           echo ${{ env.AR_URL }}
           echo ${{ secrets.SERVICE_ACCOUNT_NAME }}
           echo ${{ env.TEST_VARIABLE }}
+          echo ${{ env.TEST_VARIABLE_2 }}
