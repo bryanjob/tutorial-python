@@ -4,10 +4,11 @@ on: workflow_dispatch
 
 env:
   PROJECT_ID: project-python
-  REPOSITORY: ${GITHUB_REPOSITORY}repo-name
+  REPO: ${GITHUB_REPOSITORY}
+  REPOSITORY: ${REPO}repo-name
   IMAGE: image-name
   AR_LOCATION: us-central1
-  AR_URL: ${AR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}
+  AR_URL: ${AR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY##*/}
   SERVICE_ACCOUNT_NAME: ${{ secrets.SERVICE_ACCOUNT_NAME }}
   SERVICE_ACCOUNT: ${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
   TEST_VARIABLE: ${{ vars.A_VARIABLE }}
@@ -35,3 +36,6 @@ jobs:
           echo ${{ secrets.SERVICE_ACCOUNT_NAME }}
           echo ${{ env.TEST_VARIABLE }}
           echo ${{ env.TEST_VARIABLE_2 }}
+          echo ${{ github.repository }}
+          echo ${GITHUB_REPOSITORY}
+          echo ${GITHUB_REPOSITORY##*/}
