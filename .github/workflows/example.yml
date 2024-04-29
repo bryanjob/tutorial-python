@@ -43,3 +43,4 @@ jobs:
           echo "this is repo variable set env ${{ env.TEST_VARIABLE_3 }}"
           echo "this is repo varilable direct ${{ vars.REPO_VARIABLE_2 }}"
           echo "this is secret repo variable ${{ secrets.REPO_SECRET_VARIABLE_1 }}"
+          echo "default_branch value is $default-branch"
