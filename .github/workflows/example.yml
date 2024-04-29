@@ -13,6 +13,7 @@ env:
   SERVICE_ACCOUNT: ${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
   TEST_VARIABLE: ${{ vars.A_VARIABLE }}
   TEST_VARIABLE_2: ${{ vars.B_VARIABLE }}
+  TEST_VARIABLE_3: ${{ vars.REPO_VARIABLE_2 }}
 
 jobs:
   example:
@@ -39,3 +40,6 @@ jobs:
           echo ${{ github.repository }}
           echo ${GITHUB_REPOSITORY}
           echo ${GITHUB_REPOSITORY##*/}
+          echo "this is repo variable set env ${{ env.TEST_VARIABLE_3 }}"
+          echo "this is repo varilable direct ${{ vars.REPO_VARIABLE_2 }}"
+          echo "this is secret repo variable ${{ secrets.REPO_SECRET_VARIABLE_1 }}"
