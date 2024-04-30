@@ -36,6 +36,13 @@ jobs:
         name: Get short sha
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
+      - id: meta
+        name: Extract metadata (tags, labels) for Docker
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.AR_URL }}
+          tags: type=sha,format=short,prefix=
+
       - name: Check output
         run: |
           echo ${{ steps.vars.outputs.short_ref }}
@@ -61,3 +68,5 @@ jobs:
           echo "github sha context ${{ github.sha }}"
           echo "get tag name ${{ steps.get-tag-name.outputs.TAG_NAME }}"
           echo "get short sha ${{ steps.get-sha.outputs.sha_short }}"
+          echo "Docker meta sha tag ${{ steps.meta.outputs.tags }}"
+          echo "Docker meta label ${{ steps.meta.outputs.labels }}"
