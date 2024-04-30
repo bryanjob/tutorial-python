@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 env:
   PROJECT_ID: project-python
-  REPO: ${GITHUB_REPOSITORY}
+  REPO: ${GITHUB_REPOSITORY##*/}
   REPOSITORY: ${REPO}repo-name
   IMAGE: image-name
   AR_LOCATION: us-central1
@@ -40,7 +40,7 @@ jobs:
         name: Extract metadata (tags, labels) for Docker
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.AR_URL }}
+          images: ${{ env.AR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}
           tags: |
             type=sha,format=short,prefix=
 
