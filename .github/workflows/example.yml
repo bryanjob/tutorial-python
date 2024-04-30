@@ -41,7 +41,8 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.AR_URL }}
-          tags: type=sha,format=short,prefix=
+          tags: |
+            type=sha,format=short,prefix=
 
       - name: Check output
         run: |
