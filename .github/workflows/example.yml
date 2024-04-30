@@ -19,12 +19,18 @@ jobs:
   example:
     runs-on: ubuntu-latest
     environment: dev
+    env:
+      GH_SHA_VARIABLE: ${GITHUB_SHA::8}
     steps:
       - uses: actions/checkout@v4
 
       - id: vars
         name: Set output        
         run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+
+      - id: get-tag-name
+        name: Get Tag Name
+        run: echo "TAG_NAME=${GITHUB_SHA::8}" >> $GITHUB_OUTPUT
 
       - name: Check output
         run: |
@@ -46,3 +52,7 @@ jobs:
           echo "default_branch value is $default-branch"
           echo "github ref value ${GITHUB_REF}"
           echo "github ref value slice ${GITHUB_REF#refs/*/}"
+          echo "github sha as env variable ${{ env.GH_SHA_VARIABLE }}"
+          echo "github sha direct reference ${GITHUB_SHA::8}"
+          echo "github sha context ${{ github.sha }}"
+          echo "get tag name ${{ steps.get-tag-name.outputs.TAG_NAME }}"
