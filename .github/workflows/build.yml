@@ -9,7 +9,7 @@ jobs:
     if: github.ref_name == github.event.repository.default_branch
     runs-on: Ubuntu-latest
     needs: lint
-    uses: lint.yml
+    uses: ./.github/workflows/lint.yml
 
     steps:
     - id: build
