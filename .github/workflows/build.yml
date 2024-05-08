@@ -16,4 +16,4 @@ jobs:
       name: Build app
       run: |
         echo "build app"
-        echo "Result of lint: ${{ needs.lint.result }}""
+        echo "Result of lint: ${{ needs.lint.result }}"
