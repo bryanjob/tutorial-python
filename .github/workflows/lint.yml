@@ -4,10 +4,13 @@ on:
   push:
     paths:
       - '**.py'
-  
-  workflow_dispatch:
+
+  pull_request:
     paths:
       - '**.py'
+
+  workflow_dispatch:
+  workflow_call:
 
 jobs:
   lint:
