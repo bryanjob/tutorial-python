@@ -1,19 +1,20 @@
 name: Build
 
-on:
-  workflow_dispatch
+on: workflow_dispatch
 
 jobs:
-  build:
+   build:
     name: Build
     if: github.ref_name == github.event.repository.default_branch
     runs-on: Ubuntu-latest
-    needs: lint
-    uses: lint.yml
 
     steps:
+    - id: lint
+      name: Code Analysis
+      uses: ./.github/workflows/lint.yml
+      
     - id: build
-      name: Build app
+      name: Build app      
       run: |
-        echo "build app"
-        echo "Result of lint: ${{ needs.lint.result }}""
+        echo "build app step"
+        echo "Result of lint: ${{ needs.lint.result }}"
