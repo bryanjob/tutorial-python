@@ -4,7 +4,11 @@ on:
   push:
     paths:
       - '**.py'
-  
+
+  pull_request:
+    paths:
+      - '**.py'
+
   workflow_dispatch:
   workflow_call:
 
