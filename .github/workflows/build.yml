@@ -3,20 +3,18 @@ name: Build
 on: workflow_dispatch
 
 jobs:
-   build:
+  test:
+    name: Test
+    if: github.ref_name == github.event.repository.default_branch
+    uses: ./.github/workflows/lint.yml
+    
+  build:
     name: Build
     if: github.ref_name == github.event.repository.default_branch
     runs-on: Ubuntu-latest
-
+    needs: test
+    
     steps:
-    - id: checkout
-      name: Checkout repository
-      uses: actions/checkout@v4
-      
-    - id: lint
-      name: Code Analysis
-      uses: ./.github/workflows/lint.yml
-      
     - id: build
       name: Build app      
       run: |
