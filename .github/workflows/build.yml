@@ -17,5 +17,5 @@ jobs:
     - id: build
       name: Build app      
       run: |
-        echo "build app"
+        echo "build app step"
         echo "Result of lint: ${{ needs.lint.result }}"
