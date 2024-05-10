@@ -1,5 +1,5 @@
 """ test file for calculate age """
-from calculate_age import get_age
+from app.calculate_age import get_age
 
 def test_get_age():
     """ this test assert age is calculated corectly """
