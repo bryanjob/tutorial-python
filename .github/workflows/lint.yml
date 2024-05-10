@@ -6,12 +6,7 @@ on:
       - '**.py'
   
   workflow_dispatch:
-    paths:
-      - '**.py'
-
   workflow_call:
-    paths:
-      - '**.py'
 
 jobs:
   lint:
