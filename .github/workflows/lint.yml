@@ -9,6 +9,10 @@ on:
     paths:
       - '**.py'
 
+  workflow_call:
+    paths:
+      - '**.py'
+
 jobs:
   lint:
     runs-on: ubuntu-latest
