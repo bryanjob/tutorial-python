@@ -9,6 +9,10 @@ jobs:
     runs-on: Ubuntu-latest
 
     steps:
+    - id: checkout
+      name: Checkout repository
+      uses: actions/checkout@v4
+      
     - id: lint
       name: Code Analysis
       uses: ./.github/workflows/lint.yml
