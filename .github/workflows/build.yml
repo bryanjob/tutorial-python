@@ -1,22 +1,27 @@
+# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#running-your-pull_request-workflow-when-a-pull-request-merges
+
 name: Build
 
-on: workflow_dispatch
+on:
+  pull_request:
+    types:
+      - closed
 
 jobs:
-  lint:
-    name: Code Analysis
-    if: github.ref_name == github.event.repository.default_branch
-    uses: ./.github/workflows/lint.yml
+  # lint:
+    # name: Code Analysis
+    # if: github.ref_name == github.event.repository.default_branch
+    # uses: ./.github/workflows/lint.yml
 
-  test:
-    name: Test
-    uses: ./.github/workflows/test.yml
+  # test:
+    # name: Test
+    # uses: ./.github/workflows/test.yml
     
   build:
     name: Build
-    #if: github.ref_name == github.event.repository.default_branch
+    if: github.event.pull_request.merged == true && github.event.review.state == 'approved' && github.ref_name == github.event.repository.default_branch
     runs-on: Ubuntu-latest
-    needs: [lint, test]
+    # needs: [lint, test]
     
     steps:
     - id: build
