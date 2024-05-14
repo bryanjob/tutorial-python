@@ -1,9 +1,9 @@
 name: Code Analysis
 
 on: 
-  push:
-    paths:
-      - '**.py'
+  # push:
+    # paths:
+      # - '**.py'
 
   pull_request:
     paths:

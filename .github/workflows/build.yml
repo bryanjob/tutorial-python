@@ -19,7 +19,7 @@ jobs:
     
   build:
     name: Build
-    if: github.event.pull_request.merged == true && github.event.review.state == 'approved' && github.ref_name == github.event.repository.default_branch
+    # if: github.event.pull_request.merged == true && github.event.review.state == 'approved' && github.ref_name == github.event.repository.default_branch
     runs-on: Ubuntu-latest
     # needs: [lint, test]
     
@@ -28,5 +28,8 @@ jobs:
       name: Build app      
       run: |
         echo "build app step"
-        echo "Result of lint: ${{ needs.lint.result }}"
-        echo "Result of test: ${{ needs.test.result }}"
+        echo "Request Merged = ${{  github.event.pull_request.merged }}"
+        echo "Review State = ${{ github.event.review.state }}"
+        echo "Default Branch = ${{ github.event.repository.default_branch }}"
+        # echo "Result of lint: ${{ needs.lint.result }}"
+        # echo "Result of test: ${{ needs.test.result }}"
