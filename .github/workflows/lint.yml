@@ -1,6 +1,6 @@
 name: Code Analysis
 
-# on: 
+on: 
   # push:
     # paths:
       # - '**.py'
