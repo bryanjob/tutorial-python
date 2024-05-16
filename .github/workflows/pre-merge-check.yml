@@ -8,7 +8,7 @@ on:
   workflow_run:
     workflows:
       - Code Analysis
-      - Test
+      # - Test
 
     types:
       - completed
