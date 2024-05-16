@@ -1,0 +1,39 @@
+name: Pre-Merge Check
+
+on: 
+  # pull_request:
+    # branches:
+      # - main
+
+  workflow_run:
+    workflows:
+      - Code Analysis
+      - Test
+
+    types:
+      - completed
+
+  workflow_dispatch:
+
+jobs:
+  # lint:
+    # name: Code Analysis
+    # uses: ./.github/workflows/lint.yml
+
+  # test:
+    # name: Test
+    # uses: ./.github/workflows/test.yml
+ 
+  status:
+    name: Status
+    runs-on: Ubuntu-latest
+    # needs: [lint, test]
+
+    steps:
+      - id: show-status
+        name: Show Status
+        run: |
+          echo "Show workflow status"
+          echo "Workflow Run Conclusion: ${{ github.event.workflow_run.conclusion }}"
+          echo "Result of lint: ${{ needs.lint.result }}"
+          echo "Result of test: ${{ needs.test.result }}"
