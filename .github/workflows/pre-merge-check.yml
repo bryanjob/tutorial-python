@@ -11,7 +11,7 @@ on:
       # - Test
 
     types:
-      - completed
+      - requested
 
   workflow_dispatch:
 
