@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v4
+
     - uses: actions/scripts@v7    
       with:
         scripts: echo "Hello World"
