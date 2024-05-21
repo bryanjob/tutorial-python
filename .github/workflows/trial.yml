@@ -15,17 +15,13 @@ jobs:
     - id: py-file-list
       name: Set py file list
       run: |
-        echo "GIT_LS_FILES=$(git ls-files)" >> $GITHUB_OUTPUT
-        echo "GIT_LS_FILES_UNMERGED=$(git ls-files --unmerged)" >> $GITHUB_OUTPUT
-        echo "GIT_LS_FILES_STAGE=$(git ls-files --stage)" >> $GITHUB_OUTPUT
+        echo "HELLO_WORLD='hello world'" >> $GITHUB_OUTPUT
 
     - name: Show variables
       run: |
         echo "GITHUB_BASE_REF = ${GITHUB_BASE_REF}"
         echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
-        echo "GIT_LS_FILES = ${{ steps.py-file-list.outputs.GIT_LS_FILES }}"
-        echo "GIT_LS_FILES_UNMERGED = ${{ steps.py-file-list.outputs.GIT_LS_FILES_UNMERGED }}"
-        echo "GIT_LS_FILES_STAGE = ${{ steps.py-file-list.outputs.GIT_LS_FILES_STAGE }}"
+        echo "HELLO_WORLD = ${{ steps.py-file-list.outputs.HELLO_WORLD }}"
         git diff --name-only $GITHUB_HEAD_REF
         git diff --name-only $GITHUB_BASE_REF $GITHUB_HEAD_REF
         git ls-files
