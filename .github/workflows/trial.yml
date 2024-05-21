@@ -8,7 +8,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/github-scripts@v7
-      with:
-        scripts: echo "Hello World"
+    - uses: actions/checkout@v4
 
+    - id: py-file-list
+      name: Set py file list
+      run: |
+        echo "PY_FILE_LIST=$(git diff --name-only --diff-filter=d HEAD^ | grep -E '*.py')" >> $GITHUB_OUTPUT
+        echo "GITHUB_PY_FILE_LIST=$(git diff --name-only $GITHUB_BASE_REF $GITHUB_HEAD_REF)" >> $GITHUB_OUTPUT
+
+    - name: Show variables
+      run: |
+        echo "PY_FILE_LIST = ${{ steps.py-file-list.outputs.PY_FILE_LIST }}"
+        echo "GITHUB_PY_FILE_LIST = ${{ steps.py-file-list.outputs.GITHUB_PY_FILE_LIST }}"
