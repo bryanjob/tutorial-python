@@ -1,0 +1,14 @@
+name: Trial
+
+on:
+  workflow_dispatch:
+
+jobs:
+  trial:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/scripts@v7    
+      with:
+        scripts: echo "Hello World"
+
