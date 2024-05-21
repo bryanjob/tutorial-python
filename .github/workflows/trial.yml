@@ -26,4 +26,8 @@ jobs:
         echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
         git diff --name-only --diff-filter=d HEAD^ HEAD)
         git diff --name-only $GITHUB_BASE_REF $GITHUB_HEAD_REF
+        git ls-files
+        git ls-files --unmerged
+        git ls-files --stage
+        
         
