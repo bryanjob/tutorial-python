@@ -16,7 +16,6 @@ jobs:
       name: Set py file list
       run: |
         echo "GITHUB_PY_FILE_LIST=$(git diff --name-only $GITHUB_BASE_REF $GITHUB_HEAD_REF)" >> $GITHUB_OUTPUT
-        echo "GIT_DIFF_HEAD=$(git diff --name-only --diff-filter=d HEAD^ HEAD)" >> $GITHUB_OUTPUT
         echo "GIT_DIFF_GITHUB_BASE_HEAD=$(git diff --name-only $GITHUB_BASE_REF $GITHUB_HEAD_REF)" >> $GITHUB_OUTPUT
         echo "GIT_DIFF_GITHUB_BASE=$(git diff --name-only $GITHUB_BASE_REF)" >> $GITHUB_OUTPUT
         echo "GIT_DIFF_GITHUB_HEAD=$(git diff --name-only $GITHUB_HEAD_REF)" >> $GITHUB_OUTPUT
@@ -36,9 +35,7 @@ jobs:
         echo "GIT_LS_FILES = ${{ steps.py-file-list.outputs.GIT_LS_FILES }}"
         echo "GIT_LS_FILES_UNMERGED = ${{ steps.py-file-list.outputs.GIT_LS_FILES_UNMERGED }}"
         echo "GIT_LS_FILES_STAGE = ${{ steps.py-file-list.outputs.GIT_LS_FILES_STAGE }}"
-        git diff --name-only --diff-filter=d HEAD^ HEAD
         git diff --name-only $GITHUB_BASE_REF $GITHUB_HEAD_REF
         git ls-files
         git ls-files --unmerged
         git ls-files --stage
-        echo "PY_FILE_LIST = ${{ steps.py-file-list.outputs.PY_FILE_LIST }}"
