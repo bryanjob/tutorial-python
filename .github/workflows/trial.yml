@@ -15,23 +15,16 @@ jobs:
     - id: py-file-list
       name: Set py file list
       run: |
-        echo "GITHUB_PY_FILE_LIST=$(git diff --name-only $GITHUB_BASE_REF $GITHUB_HEAD_REF)" >> $GITHUB_OUTPUT
-        echo "GIT_DIFF_GITHUB_BASE_HEAD=$(git diff --name-only $GITHUB_BASE_REF $GITHUB_HEAD_REF)" >> $GITHUB_OUTPUT
-        echo "GIT_DIFF_GITHUB_BASE=$(git diff --name-only $GITHUB_BASE_REF)" >> $GITHUB_OUTPUT
-        echo "GIT_DIFF_GITHUB_HEAD=$(git diff --name-only $GITHUB_HEAD_REF)" >> $GITHUB_OUTPUT
+        echo "GITHUB_PY_FILE_LIST=$(git diff --name-only $GITHUB_HEAD_REF)" >> $GITHUB_OUTPUT
         echo "GIT_LS_FILES=$(git ls-files)" >> $GITHUB_OUTPUT
         echo "GIT_LS_FILES_UNMERGED=$(git ls-files --unmerged)" >> $GITHUB_OUTPUT
         echo "GIT_LS_FILES_STAGE=$(git ls-files --stage)" >> $GITHUB_OUTPUT
-        echo "PY_FILE_LIST=$(git diff --name-only --diff-filter=d HEAD^ HEAD)" >> $GITHUB_OUTPUT
 
     - name: Show variables
       run: |
         echo "GITHUB_PY_FILE_LIST = ${{ steps.py-file-list.outputs.GITHUB_PY_FILE_LIST }}"
         echo "GITHUB_BASE_REF = ${GITHUB_BASE_REF}"
         echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
-        echo "GIT_DIFF_GITHUB_BASE_HEAD = ${{ steps.py-file-list.outputs.GIT_DIFF_GITHUB_BASE_HEAD }}"
-        echo "GIT_DIFF_GITHUB_BASE = ${{ steps.py-file-list.outputs.GIT_DIFF_GITHUB_BASE }}"
-        echo "GIT_DIFF_GITHUB_HEAD = ${{ steps.py-file-list.outputs.GIT_DIFF_GITHUB_HEAD }}"
         echo "GIT_LS_FILES = ${{ steps.py-file-list.outputs.GIT_LS_FILES }}"
         echo "GIT_LS_FILES_UNMERGED = ${{ steps.py-file-list.outputs.GIT_LS_FILES_UNMERGED }}"
         echo "GIT_LS_FILES_STAGE = ${{ steps.py-file-list.outputs.GIT_LS_FILES_STAGE }}"
