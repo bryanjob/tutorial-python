@@ -22,8 +22,13 @@ jobs:
         echo "GITHUB_BASE_REF = ${GITHUB_BASE_REF}"
         echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
         echo "HELLO_WORLD = ${{ steps.py-file-list.outputs.HELLO_WORLD }}"
+        echo "git diff --name-only ${GITHUB_HEAD_REF}"
         git diff --name-only $GITHUB_HEAD_REF
+        echo "git diff --name-only ${GITHUB_BASE_REF} ${GITHUB_HEAD_REF}"
         git diff --name-only $GITHUB_BASE_REF $GITHUB_HEAD_REF
+        echo "git ls-files"
         git ls-files
+        echo "git ls-files --unmerged"
         git ls-files --unmerged
+        echo "git ls-files --stage"
         git ls-files --stage
