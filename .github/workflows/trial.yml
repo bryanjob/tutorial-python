@@ -20,5 +20,5 @@ jobs:
       run: |
         echo "PY_FILE_LIST = ${{ steps.py-file-list.outputs.PY_FILE_LIST }}"
         echo "GITHUB_PY_FILE_LIST = ${{ steps.py-file-list.outputs.GITHUB_PY_FILE_LIST }}"
-        echo "GITHUB_BASE_REF = $GITHUB_BASE_REF"
-        echo "GITHUB_HEAD_REF = $GITHUB_HEAD_REF"
+        echo "GITHUB_BASE_REF = ${GITHUB_BASE_REF}"
+        echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
