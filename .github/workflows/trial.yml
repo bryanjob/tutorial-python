@@ -13,10 +13,12 @@ jobs:
     - id: py-file-list
       name: Set py file list
       run: |
-        echo "PY_FILE_LIST=$(git diff --name-only --diff-filter=d HEAD^ | grep -E '*.py')" >> $GITHUB_OUTPUT
+        echo "PY_FILE_LIST=$(git diff --name-only --diff-filter=d HEAD^ HEAD)" >> $GITHUB_OUTPUT
         echo "GITHUB_PY_FILE_LIST=$(git diff --name-only $GITHUB_BASE_REF $GITHUB_HEAD_REF)" >> $GITHUB_OUTPUT
 
     - name: Show variables
       run: |
         echo "PY_FILE_LIST = ${{ steps.py-file-list.outputs.PY_FILE_LIST }}"
         echo "GITHUB_PY_FILE_LIST = ${{ steps.py-file-list.outputs.GITHUB_PY_FILE_LIST }}"
+        echo "GITHUB_BASE_REF = $GITHUB_BASE_REF"
+        echo "GITHUB_HEAD_REF = $GITHUB_HEAD_REF"
