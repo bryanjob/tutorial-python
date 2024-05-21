@@ -24,6 +24,6 @@ jobs:
         echo "GITHUB_PY_FILE_LIST = ${{ steps.py-file-list.outputs.GITHUB_PY_FILE_LIST }}"
         echo "GITHUB_BASE_REF = ${GITHUB_BASE_REF}"
         echo "GITHUB_HEAD_REF = ${GITHUB_HEAD_REF}"
-        echo "PY_FILE_LIST=$(git diff --name-only --diff-filter=d HEAD^ HEAD)"
-        echo "GITHUB_PY_FILE_LIST=$(git diff --name-only $GITHUB_BASE_REF $GITHUB_HEAD_REF)"
+        git diff --name-only --diff-filter=d HEAD^ HEAD)
+        git diff --name-only $GITHUB_BASE_REF $GITHUB_HEAD_REF
         
