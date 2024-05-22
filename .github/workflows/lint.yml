@@ -48,6 +48,9 @@ jobs:
         git fetch origin ${{ env.DEFAULT_BRANCH }}
         git diff --name-only origin/${{ env.DEFAULT_BRANCH }}...HEAD | grep '\.py$' > py_file_list.txt || true
 
+    - name: Show py file list
+      run: cat py_file_list
+
     - name: Analysing the code with pylint
       if: success() && steps.py-file-list.outputs.py_file_list != ''
       run: >
