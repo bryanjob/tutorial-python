@@ -31,6 +31,7 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+        with: fetch-depth: 2
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
@@ -42,19 +43,18 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
 
-    - name: Fetch ${{ env.DEFAULT_BRANCH }} branch
-      run: git fetch origin ${{ env.DEFAULT_BRANCH }}
-
     - id: py-file-list
       name: Set changed Python file list
-      run: |        
+      run: |
+        git fetch origin ${{ env.DEFAULT_BRANCH }}
         git diff --name-only origin/${{ env.DEFAULT_BRANCH }}...HEAD | grep '\.py$' > py_file_list.txt
-
-    - name: Show py file list
-      run: cat py_file_list.txt
+        if [ ! -s py_file_list.txt ]; then
+          echo "No Python files changed."
+          exit 0
+        fi
 
     - name: Analysing the code with pylint
-      if: success() && steps.py-file-list.outputs.py_file_list != ''
+      # if: success() && steps.py-file-list.outputs.py_file_list != ''
       run: >
         make lint \
           PY_FILE_LIST=$(cat py_file_list.txt)
