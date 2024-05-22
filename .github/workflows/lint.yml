@@ -52,6 +52,9 @@ jobs:
         if [ ! -s py_file_list.txt ]; then
           echo "No Python files changed."
           exit 0
+        else
+          echo "Python file(s) to analyze: "
+          cat py_file_list.txt
         fi
 
     - name: Analysing the code with pylint
