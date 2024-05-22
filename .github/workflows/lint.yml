@@ -42,11 +42,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
 
+    - name: Fetch ${{ env.DEFAULT_BRANCH }} branch
+      run: git fetch origin ${{ env.DEFAULT_BRANCH }}
+
     - id: py-file-list
       name: Set changed Python file list
-      run: |
-        git fetch origin ${{ env.DEFAULT_BRANCH }}
-        git diff --name-only origin/${{ env.DEFAULT_BRANCH }}...HEAD | grep '\.py$' > py_file_list.txt || true
+      run: |        
+        git diff --name-only origin/${{ env.DEFAULT_BRANCH }}...HEAD | grep '\.py$' > py_file_list.txt
 
     - name: Show py file list
       run: cat py_file_list.txt
