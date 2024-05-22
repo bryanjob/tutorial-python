@@ -1,4 +1,5 @@
 # pylint: disable=missing-docstring
+# pylint: disable=trailing-whitespace
 # pylint: disable=missing-final-newline
 # pylint: disable=unused-argument
 import os

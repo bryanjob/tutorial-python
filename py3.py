@@ -1,3 +1,7 @@
+# pylint: disable=trailing-whitespace
+# pylint: disable=missing-final-newline
+# pylint: disable=missing-docstring
+# pylint: disable=unused-argument
 import os
 import math
 

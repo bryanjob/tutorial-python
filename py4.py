@@ -1,2 +1,3 @@
+# pylint: disable=trailing-whitespace
 # 
 # 
