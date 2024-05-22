@@ -54,7 +54,7 @@ jobs:
           exit 0
         else
           echo "Python file(s) to analyze: "
-          cat py_file_list.txt
+          cat py_file_list.txt | tr '\n' ' '
         fi
 
     - name: Analysing the code with pylint
