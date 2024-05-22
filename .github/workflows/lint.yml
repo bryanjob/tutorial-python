@@ -61,4 +61,4 @@ jobs:
       # if: success() && steps.py-file-list.outputs.py_file_list != ''
       run: >
         make lint \
-          PY_FILE_LIST=$(cat py_file_list.txt)
+          PY_FILE_LIST=$(cat py_file_list.txt | tr '\n' ' ')
