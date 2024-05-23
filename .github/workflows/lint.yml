@@ -47,8 +47,9 @@ jobs:
     - id: py-file-list
       name: Set changed Python file list
       run: |
-        git fetch origin ${{ env.DEFAULT_BRANCH }}
-        git diff --name-only origin/${{ env.DEFAULT_BRANCH }}...HEAD | grep '\.py$' > py_file_list.txt || true
+        # git fetch origin ${{ env.DEFAULT_BRANCH }}
+        # git diff --name-only origin/${{ env.DEFAULT_BRANCH }}...HEAD | grep '\.py$' > py_file_list.txt || true
+        find * -type f -iname '*.py' > py_file_list.txt || true
         if [ ! -s py_file_list.txt ]; then
           echo "No Python files changed."
           exit 0
@@ -57,6 +58,9 @@ jobs:
           # cat py_file_list.txt
         fi
         echo "py_file_list ${{ steps.py-file-list.outputs.py_file_list }}"
+
+    - name: Troublshoot
+      run: echo "py_file_list ${{ steps.py-file-list.outputs.py_file_list }}"
 
     - name: Analysing the code with pylint
       if: success() && steps.py-file-list.outputs.py_file_list != ''
