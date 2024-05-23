@@ -73,6 +73,9 @@ jobs:
             echo "RUN_LINT=true" >> $GITHUB_OUTPUT
           fi
         fi
+        echo "Python file(s) to analyze: "
+        cat py_file_list.txt
+        echo "RUN_LINT ${{ steps.py-file-list.outputs.RUN_LINT }}"
 
     - name: Analysing the code with pylint
       if: success() && steps.py-file-list.outputs.RUN_LINT == true
