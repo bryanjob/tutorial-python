@@ -12,6 +12,16 @@ on:
       # - '**.py'
 
   workflow_dispatch:
+    inputs:
+      lint_mode:
+        description: 'Choose linting mode'
+        required: true
+        default: 'changed'
+        type: choice
+        options:
+          - changed
+          - all
+
   workflow_call:
 
 permissions:
@@ -45,17 +55,24 @@ jobs:
         pip install pylint
 
     - id: py-file-list
-      name: Set changed Python file list
+      name: Set Python file list
       run: |
-        git fetch origin ${{ env.DEFAULT_BRANCH }}
-        git diff --name-only origin/${{ env.DEFAULT_BRANCH }}...HEAD | grep '\.py$' > py_file_list.txt || true
-        if [ ! -s py_file_list.txt ]; then
-          echo "No Python files changed."
-          exit 0
-        # else
-          # echo "Python file(s) to analyze: "
-          # cat py_file_list.txt
+        if [ "${{ github.event.inputs.lint_mode }}" == "changed" ]; then
+          git fetch origin ${{ env.DEFAULT_BRANCH }}
+          git diff --name-only origin/${{ env.DEFAULT_BRANCH }}...HEAD | grep '\.py$' > py_file_list.txt || true
+          if [ ! -s py_file_list.txt ]; then
+            echo "No Python file(s) changed."
+            exit 0
+          fi
+        else
+          find * -type f -iname '*.py' > py_file_list.txt || true
+          if [ ! -s py_file_list.txt ]; then
+            echo "No Python file(s) found."
+            exit 0
+          fi
         fi
+        echo "Python file(s) to analyze: "
+        cat py_file_list.txt
 
     - name: Analysing the code with pylint
       if: success() && steps.py-file-list.outputs.py_file_list != ''
