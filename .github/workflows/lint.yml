@@ -30,6 +30,7 @@ permissions:
 env:
   DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
   PYTHON_VERSION: "3.10"
+  LINT_MODE: ${{ github.event.inputs.lint_mode }}
 
 jobs:
   lint:
@@ -54,14 +55,15 @@ jobs:
     - id: py-file-list
       name: Set Python file list
       run: |
-        if [ "${{ github.event.inputs.lint_mode }}" == "changed" ]; then
+        
+        if [ "${{ env.LINT_MODE }}" == "" || "${{ env.LINT_MODE }}" == "changed" ]; then
           git fetch origin ${{ env.DEFAULT_BRANCH }}
           git diff --name-only origin/${{ env.DEFAULT_BRANCH }}...HEAD | grep '\.py$' > py_file_list.txt || true
           if [ ! -s py_file_list.txt ]; then
             echo "No Python file(s) changed."
             exit 0
           fi
-        elif [ "${{ github.event.inputs.lint_mode }}" == "all" ]; then
+        else
           find * -type f -iname '*.py' > py_file_list.txt || true
           if [ ! -s py_file_list.txt ]; then
             echo "No Python file(s) found."
