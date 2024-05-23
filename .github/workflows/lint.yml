@@ -62,7 +62,7 @@ jobs:
             echo "No Python file(s) changed."
             exit 0
           else
-            echo "RUN_LINT=true" >>  >> $GITHUB_ENV
+            echo "RUN_LINT=true" >> $GITHUB_ENV
           fi
         else
           find * -type f -iname '*.py' > py_file_list.txt || true
@@ -70,7 +70,7 @@ jobs:
             echo "No Python file(s) found."
             exit 0
           else
-            echo "RUN_LINT=true" >>  >> $GITHUB_ENV
+            echo "RUN_LINT=true" >> $GITHUB_ENV
           fi
         fi
         echo "Python file(s) to analyze: "
