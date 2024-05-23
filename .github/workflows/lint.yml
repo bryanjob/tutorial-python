@@ -29,6 +29,7 @@ permissions:
 
 env:
   DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+  PYTHON_VERSION: "3.10"
 
 jobs:
   lint:
@@ -40,10 +41,10 @@ jobs:
       with:
         fetch-depth: 2
 
-    - name: Set up Python ${{ python-version }}
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
       uses: actions/setup-python@v5
       with: 
-        python-version: "3.10"
+        python-version: ${{ env.PYTHON_VERSION }}
     
     - name: Install dependencies
       run: |
