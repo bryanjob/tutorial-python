@@ -73,7 +73,7 @@ jobs:
         cat py_file_list.txt
 
     - name: Analysing the code with pylint
-      if: success() #&& steps.py-file-list.outputs.py_file_list != ''
+      if: success() && steps.py-file-list.outputs.py_file_list != ''
       run: >
         make lint \
           PY_FILE_LIST="$(cat py_file_list.txt | tr '\n' ' ')"
