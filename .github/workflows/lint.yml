@@ -44,10 +44,10 @@ jobs:
       with:
         fetch-depth: 2
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python ${{ this.python-version }}
       uses: actions/setup-python@v5
       with: 
-        python-version: ${{ matrix.python-version }}
+        python-version: "3.10"
     
     - name: Install dependencies
       run: |
@@ -71,8 +71,6 @@ jobs:
             exit 0
           fi
         fi
-        echo "Python file(s) to analyze: "
-        cat py_file_list.txt
 
     - name: Analysing the code with pylint
       if: success() && steps.py-file-list.outputs.py_file_list != ''
