@@ -71,6 +71,7 @@ jobs:
         fi
         echo "Python file(s) to analyze: "
         cat py_file_list.txt
+        echo "py_file_list ${{ steps.py-file-list.outputs.py_file_list }}"
 
     - name: Analysing the code with pylint
       if: success() && steps.py-file-list.outputs.py_file_list != ''
