@@ -77,7 +77,7 @@ jobs:
         cat py_file_list.txt
 
     - name: Analysing the code with pylint
-      if: ${{ success() }} #&& env.RUN_LINT == true }}
+      if: ${{ success() && env.RUN_LINT }}
       run: >
         make lint \
           PY_FILE_LIST="$(cat py_file_list.txt | tr '\n' ' ')"
