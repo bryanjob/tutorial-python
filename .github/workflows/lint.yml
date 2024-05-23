@@ -12,6 +12,16 @@ on:
       # - '**.py'
 
   workflow_dispatch:
+    inputs:
+      lint_mode:
+        description: 'Choose linting mode'
+        required: true
+        default: 'changed'
+        type: choice
+        options:
+          - changed
+          - all
+
   workflow_call:
 
 permissions:
@@ -19,14 +29,12 @@ permissions:
 
 env:
   DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+  PYTHON_VERSION: "3.10"
+  LINT_MODE: ${{ github.event.inputs.lint_mode }}
 
 jobs:
   lint:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        python-version: ["3.10"]
 
     steps:
     - name: Checkout repository
@@ -34,10 +42,10 @@ jobs:
       with:
         fetch-depth: 2
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
       uses: actions/setup-python@v5
       with: 
-        python-version: ${{ matrix.python-version }}
+        python-version: ${{ env.PYTHON_VERSION }}
     
     - name: Install dependencies
       run: |
@@ -45,28 +53,29 @@ jobs:
         pip install pylint
 
     - id: py-file-list
-      name: Set changed Python file list
-      run: |
-        # git fetch origin ${{ env.DEFAULT_BRANCH }}
-        # git diff --name-only origin/${{ env.DEFAULT_BRANCH }}...HEAD | grep '\.py$' > py_file_list.txt || true
-        find * -type f -iname '*.py' > py_file_list.txt || true
-        if [ ! -s py_file_list.txt ]; then
-          echo "No Python files changed."
-          exit 0
-        # else
-          # echo "Python file(s) to analyze: "
-          # cat py_file_list.txt
+      name: Set Python file list
+      run: |        
+        if [ "${{ env.LINT_MODE }}" == "" ] || [ "${{ env.LINT_MODE }}" == "changed" ]; then
+          git fetch origin ${{ env.DEFAULT_BRANCH }}
+          git diff --name-only origin/${{ env.DEFAULT_BRANCH }}...HEAD | grep '\.py$' > py_file_list.txt || true
+          if [ ! -s py_file_list.txt ]; then
+            echo "No Python file(s) changed."
+            exit 0
+          else
+            echo "RUN_LINT=true" >> $GITHUB_OUTPUT
+          fi
+        else
+          find * -type f -iname '*.py' > py_file_list.txt || true
+          if [ ! -s py_file_list.txt ]; then
+            echo "No Python file(s) found."
+            exit 0
+          else
+            echo "RUN_LINT=true" >> $GITHUB_OUTPUT
+          fi
         fi
-        echo "py_file_list ${{ steps.py-file-list.outputs.py_file_list }}"
-
-    - name: Troublshoot
-      run: |
-        echo "Python file(s) to analyze: "
-        cat py_file_list.txt
-        echo "py_file_list ${{ steps.py-file-list.outputs.py_file_list }}"
 
     - name: Analysing the code with pylint
-      if: success() && steps.py-file-list.outputs.py_file_list != ''
+      if: success() && steps.py-file-list.outputs.RUN_LINT == true
       run: >
         make lint \
           PY_FILE_LIST="$(cat py_file_list.txt | tr '\n' ' ')"
