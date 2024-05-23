@@ -64,7 +64,7 @@ jobs:
             echo "No Python file(s) changed."
             exit 0
           fi
-        else
+        elif [ "${{ github.event.inputs.lint_mode }}" == "all" ]; then
           find * -type f -iname '*.py' > py_file_list.txt || true
           if [ ! -s py_file_list.txt ]; then
             echo "No Python file(s) found."
