@@ -34,17 +34,13 @@ jobs:
   lint:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        python-version: ["3.10"]
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
         fetch-depth: 2
 
-    - name: Set up Python ${{ this.python-version }}
+    - name: Set up Python ${{ python-version }}
       uses: actions/setup-python@v5
       with: 
         python-version: "3.10"
