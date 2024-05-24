@@ -57,27 +57,28 @@ jobs:
       run: |        
         if [ "${{ env.LINT_MODE }}" == "" ] || [ "${{ env.LINT_MODE }}" == "changed" ]; then
           git fetch origin ${{ env.DEFAULT_BRANCH }}
-          git diff --name-only origin/${{ env.DEFAULT_BRANCH }}...HEAD | grep '\.py$' > py_file_list.txt || true
+          git diff --name-only --diff-filter=d origin/${{ env.DEFAULT_BRANCH }}...HEAD | grep '\.py$' > py_file_list.txt || true
           if [ ! -s py_file_list.txt ]; then
             echo "No Python file(s) changed."
             exit 0
-          else
-            echo "RUN_LINT=true" >> $GITHUB_ENV
+          # else
+            # echo "RUN_LINT=true" >> $GITHUB_OUTPUT
           fi
         else
           find * -type f -iname '*.py' > py_file_list.txt || true
           if [ ! -s py_file_list.txt ]; then
             echo "No Python file(s) found."
             exit 0
-          else
-            echo "RUN_LINT=true" >> $GITHUB_ENV
+          # else
+            # echo "RUN_LINT=true" >> $GITHUB_OUTPUT
           fi
         fi
+        echo "RUN_LINT=true" >> $GITHUB_OUTPUT
         echo "Python file(s) to analyze: "
         cat py_file_list.txt
 
     - name: Analysing the code with pylint
-      if: ${{ success() && env.RUN_LINT == true }}
+      if: ${{ success() && steps.py-file-list.outputs.RUN_LINT }}
       run: >
         make lint \
           PY_FILE_LIST="$(cat py_file_list.txt | tr '\n' ' ')"
