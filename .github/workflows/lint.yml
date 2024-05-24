@@ -57,7 +57,7 @@ jobs:
       run: |        
         if [ "${{ env.LINT_MODE }}" == "" ] || [ "${{ env.LINT_MODE }}" == "changed" ]; then
           git fetch origin ${{ env.DEFAULT_BRANCH }}
-          git diff --name-only origin/${{ env.DEFAULT_BRANCH }}...HEAD | grep '\.py$' > py_file_list.txt || true
+          git diff --name-only --diff-filter=d origin/${{ env.DEFAULT_BRANCH }}...HEAD | grep '\.py$' > py_file_list.txt || true
           if [ ! -s py_file_list.txt ]; then
             echo "No Python file(s) changed."
             exit 0
