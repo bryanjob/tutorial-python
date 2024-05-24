@@ -61,18 +61,19 @@ jobs:
           if [ ! -s py_file_list.txt ]; then
             echo "No Python file(s) changed."
             exit 0
-          else
-            echo "RUN_LINT=true" >> $GITHUB_OUTPUT
+          # else
+            # echo "RUN_LINT=true" >> $GITHUB_OUTPUT
           fi
         else
           find * -type f -iname '*.py' > py_file_list.txt || true
           if [ ! -s py_file_list.txt ]; then
             echo "No Python file(s) found."
             exit 0
-          else
-            echo "RUN_LINT=true" >> $GITHUB_OUTPUT
+          # else
+            # echo "RUN_LINT=true" >> $GITHUB_OUTPUT
           fi
         fi
+        echo "RUN_LINT=true" >> $GITHUB_OUTPUT
         echo "Python file(s) to analyze: "
         cat py_file_list.txt
 
