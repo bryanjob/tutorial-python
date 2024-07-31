@@ -6,7 +6,10 @@ env:
   PROJECT_ID: project-python
   REPO: ${GITHUB_REPOSITORY##*/}
   REPOSITORY: ${REPO}repo-name
+  REPO_NAME_1: ${REPO^^}
+  REPO_NAME_2: ${GITHUB_REPOSITORY##*/^^}
   IMAGE: image-name
+  REPO_NAME_3: ${REPO_NAME_1,,}-${IMAGE^}
   AR_LOCATION: us-central1
   AR_URL: ${AR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY##*/}
   SERVICE_ACCOUNT_NAME: ${{ secrets.SERVICE_ACCOUNT_NAME }}
@@ -55,8 +58,8 @@ jobs:
           echo ${{ secrets.SERVICE_ACCOUNT_NAME }}
           echo ${{ env.TEST_VARIABLE }}
           echo ${{ env.TEST_VARIABLE_2 }}
-          echo ${{ github.repository }}
-          echo ${GITHUB_REPOSITORY}
+          echo "github.repository = ${{ github.repository }}"
+          echo "GITHUB_REPOSITORY = ${GITHUB_REPOSITORY}"
           echo ${GITHUB_REPOSITORY##*/}
           echo "this is repo variable set env ${{ env.TEST_VARIABLE_3 }}"
           echo "this is repo varilable direct ${{ vars.REPO_VARIABLE_2 }}"
@@ -69,5 +72,8 @@ jobs:
           echo "github sha context ${{ github.sha }}"
           echo "get tag name ${{ steps.get-tag-name.outputs.TAG_NAME }}"
           echo "get short sha ${{ steps.get-sha.outputs.sha_short }}"
+          echo "REPO_NAME_1 = ${REPO_NAME_1}"
+          echo "REPO_NAME_3 = ${REPO_NAME_3}"
+          echo "REPO_NAME_2 = ${REPO_NAME_2}"
           echo "Docker meta sha tag ${{ steps.meta.outputs.tags }}"
           echo "Docker meta label ${{ steps.meta.outputs.labels }}"
