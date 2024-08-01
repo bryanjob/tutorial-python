@@ -73,10 +73,7 @@ jobs:
           echo "get tag name ${{ steps.get-tag-name.outputs.TAG_NAME }}"
           echo "get short sha ${{ steps.get-sha.outputs.sha_short }}"
           REPO_NAME_4=${GITHUB_REPOSITORY##*/}
-          REPO_NAME_4=${REPO_NAME_4^^}
-#          echo "GITHUB_REPOSITORY##*/^^ = ${GITHUB_REPOSITORY##*/^^}"
-#          echo "GITHUB_REPOSITORY##*/ | ^^ = ${${GITHUB_REPOSITORY##*/}^^}"
-#          echo "GITHUB_REPOSITORY##*/ | ^^ = ${{GITHUB_REPOSITORY##*/}^^}"          
+          REPO_NAME_4=${REPO_NAME_4^^}         
           echo "REPO_NAME_4 = ${REPO_NAME_4}"
           echo "REPO_NAME_1 = ${REPO_NAME_1}"
           echo "REPO_NAME_3 = ${REPO_NAME_3}"
