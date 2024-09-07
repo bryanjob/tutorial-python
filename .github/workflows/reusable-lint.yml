@@ -37,7 +37,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        cd ${{ input.lint-path }}
+        cd ${{ inputs.lint-path }}
         pwd
 
     - id: py-file-list
@@ -45,13 +45,13 @@ jobs:
       run: |
         if [ "${{ inputs.lint-mode }}" == "" ] || [ "${{ inputs.lint-mode }}" == "changed" ]; then
           git fetch origin ${{ env.DEFAULT_BRANCH }}
-          git diff --name-only --diff-filter=d origin/${{ env.DEFAULT_BRANCH }}...HEAD ${{ input.lint-path }} | grep '\.py$' > py_file_list.txt || true
+          git diff --name-only --diff-filter=d origin/${{ env.DEFAULT_BRANCH }}...HEAD ${{ inputs.lint-path }} | grep '\.py$' > py_file_list.txt || true
           if [ ! -s py_file_list.txt ]; then
             echo "No Python file(s) changed."
             exit 0
           fi
         else
-          find ${{ input.lint-path }} -type f -iname '*.py' > py_file_list.txt || true
+          find ${{ inputs.lint-path }} -type f -iname '*.py' > py_file_list.txt || true
           if [ ! -s py_file_list.txt ]; then
             echo "No Python file(s) found."
             exit 0
