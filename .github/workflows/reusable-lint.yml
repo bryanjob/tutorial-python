@@ -1,0 +1,68 @@
+name: reusable-pylint
+
+on:
+  workflow_call:
+    inputs:
+      lint-path:
+        description: "Lint Path"
+        required: true
+        type: string
+
+      lint-mode:
+        description: "Lint Mode"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+  PYTHON_VERSION: "3.10"
+  LINT_MODE: ${{ inputs.lint-mode }}
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        cd ${{ input.lint-path }}
+        pwd
+
+    - id: py-file-list
+      name: Set changed Python file list
+      run: |
+        if [ "${{ inputs.lint-mode }}" == "" ] || [ "${{ inputs.lint-mode }}" == "changed" ]; then
+          git fetch origin ${{ env.DEFAULT_BRANCH }}
+          git diff --name-only --diff-filter=d origin/${{ env.DEFAULT_BRANCH }}...HEAD ${{ input.lint-path }} | grep '\.py$' > py_file_list.txt || true
+          if [ ! -s py_file_list.txt ]; then
+            echo "No Python file(s) changed."
+            exit 0
+          fi
+        else
+          find ${{ input.lint-path }} -type f -iname '*.py' > py_file_list.txt || true
+          if [ ! -s py_file_list.txt ]; then
+            echo "No Python file(s) found."
+            exit 0
+          fi
+        fi
+        echo "RUN_LINT=true" >> $GITHUB_OUTPUT
+        echo "Python file(s) to analyze: "
+        cat py_file_list.txt
+
+    - name: Analysing the code with pylint
+      if: ${{ success() && steps.py-file-list.outputs.RUN_LINT }}
+      run: >
+        pylint "$(cat py_file_list.txt)"
+

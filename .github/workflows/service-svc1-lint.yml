@@ -1,0 +1,24 @@
+name: service-svc1-pylint
+
+on:
+  pull_request:
+    paths:
+      - 'service/svc1/**'
+
+  workflow_dispatch:
+    inputs:
+      lint_mode:
+        description: 'Choose linting mode'
+        required: true
+        default: 'changed'
+        type: choice
+        options:
+          - changed
+          - all
+
+jobs:
+  lint:
+    uses: .github/workflows/reusable-lint.yml@main
+    with:
+      lint-path: 'service/svc1/'
+      lint-mode: ${{ github.event.inputs.lint_mode }}
