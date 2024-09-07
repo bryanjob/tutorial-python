@@ -18,7 +18,7 @@ on:
 
 jobs:
   lint:
-    uses: .github/workflows/reusable-lint.yml@main
+    uses: ./.github/workflows/reusable-lint.yml@main
     with:
       lint-path: 'service/svc2/'
       lint-mode: ${{ github.event.inputs.lint_mode }}
