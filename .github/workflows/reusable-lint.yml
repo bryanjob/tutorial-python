@@ -66,5 +66,5 @@ jobs:
     - name: Analysing the code with pylint
       if: ${{ success() && steps.py-file-list.outputs.RUN_LINT }}
       run: >
-        pylint "$(cat py_file_list.txt | tr '\n' ' ')"
+        pylint $(cat py_file_list.txt | tr '\n' ' ')
 
