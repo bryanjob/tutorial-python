@@ -16,8 +16,11 @@ on:
           - changed
           - all
 
+env:
+  JOB_NAME: ${{ github.action }}
+
 jobs:
-  ${GITHUB_ACTION}:
+  ${{ env.JOB_NAME }}:
     uses: ./.github/workflows/reusable-lint.yml
     with:
       default-branch: ${{ github.event.repository.default_branch }}
