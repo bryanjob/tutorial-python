@@ -17,7 +17,7 @@ on:
           - all
 
 jobs:
-  lint:
+  call-lint:
     uses: ./.github/workflows/reusable-lint.yml
     with:
       lint-path: 'service/svc1/'
