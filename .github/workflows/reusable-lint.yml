@@ -22,7 +22,7 @@ env:
   LINT_MODE: ${{ inputs.lint-mode }}
 
 jobs:
-  lint:
+  call-lint:
     runs-on: ubuntu-latest
 
     steps:
