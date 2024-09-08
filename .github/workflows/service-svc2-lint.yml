@@ -17,7 +17,7 @@ on:
           - all
 
 env:
-  JOB_NAME: ${{ github.action }}
+  JOB_NAME: ${GITHUB_ACTION}
 
 jobs:
   ${{ env.JOB_NAME }}:
