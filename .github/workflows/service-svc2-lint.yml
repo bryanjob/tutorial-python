@@ -16,11 +16,8 @@ on:
           - changed
           - all
 
-env:
-  JOB_NAME: ${GITHUB_ACTION}
-
 jobs:
-  ${{ env.JOB_NAME }}:
+  service-svc2-pylint:
     uses: ./.github/workflows/reusable-lint.yml
     with:
       default-branch: ${{ github.event.repository.default_branch }}
