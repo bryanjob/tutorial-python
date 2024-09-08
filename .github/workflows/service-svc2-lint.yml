@@ -20,6 +20,7 @@ jobs:
   call-lint:
     uses: ./.github/workflows/reusable-lint.yml
     with:
+      default-branch: ${{ github.event.repository.default_branch }}
+      python-version: '3.10'
       lint-path: 'service/svc2/'
       lint-mode: ${{ github.event.inputs.lint_mode }}
-

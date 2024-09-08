@@ -3,6 +3,16 @@ name: reusable-pylint
 on:
   workflow_call:
     inputs:
+      default-branch:
+        description: "Default Branch"
+        required: true
+        type: string
+
+      python-version:
+        description: "Python Version"
+        required: true
+        type: string
+
       lint-path:
         description: "Lint Path"
         required: true
@@ -17,9 +27,10 @@ permissions:
   contents: read
 
 env:
-  DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
-  PYTHON_VERSION: "3.10"
+  DEFAULT_BRANCH: ${{ inputs.default-branch }}
+  PYTHON_VERSION: ${{ inputs.python-version }}
   LINT_MODE: ${{ inputs.lint-mode }}
+  LINT_PATH: ${{ inputs.lint-path }}
 
 jobs:
   lint:
@@ -37,7 +48,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        cd ${{ inputs.lint-path }}
+        cd ${{ env.LINT_PATH }}
         pwd
         python -m pip install --upgrade pip
         pip install pylint
@@ -45,15 +56,15 @@ jobs:
     - id: py-file-list
       name: Set changed Python file list
       run: |
-        if [ "${{ inputs.lint-mode }}" == "" ] || [ "${{ inputs.lint-mode }}" == "changed" ]; then
+        if [ "${{ env.LINT_MODE }}" == "" ] || [ "${{ env.LINT_MODE }}" == "changed" ]; then
           git fetch origin ${{ env.DEFAULT_BRANCH }}
-          git diff --name-only --diff-filter=d origin/${{ env.DEFAULT_BRANCH }}...HEAD ${{ inputs.lint-path }} | grep '\.py$' > py_file_list.txt || true
+          git diff --name-only --diff-filter=d origin/${{ env.DEFAULT_BRANCH }}...HEAD ${{ env.LINT_PATH }} | grep '\.py$' > py_file_list.txt || true
           if [ ! -s py_file_list.txt ]; then
             echo "No Python file(s) changed."
             exit 0
           fi
         else
-          find ${{ inputs.lint-path }} -type f -iname '*.py' > py_file_list.txt || true
+          find ${{ env.LINT_PATH }} -type f -iname '*.py' > py_file_list.txt || true
           if [ ! -s py_file_list.txt ]; then
             echo "No Python file(s) found."
             exit 0
