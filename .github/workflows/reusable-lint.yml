@@ -74,7 +74,7 @@ jobs:
         echo "RUN_LINT=true" >> $GITHUB_OUTPUT
         echo "Python file(s) to analyze: "
         cat py_file_list.txt
-        git diff --name-only --diff-filter=d HEAD^ ${{ env.LINT_PATH }}
+#        git diff --name-only --diff-filter=d HEAD^ ${{ env.LINT_PATH }}
 
     - name: Analysing the code with pylint
       if: ${{ success() && steps.py-file-list.outputs.RUN_LINT }}
